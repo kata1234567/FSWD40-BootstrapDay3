@@ -1,0 +1,9 @@
+.banner {
+	height: 450px;
+    background: url('../img/mount-everest.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    opacity: 0.5;
+}
