@@ -1,12 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<title>Advanced Exercise</title>
-	<link rel="stylesheet" href="">
+	<style>
+		#progress-bar {
+  width: 300px;
+  margin: 50px;
+}
+.progress {
+  height: 25px;
+  width: 300px;
+}
+.progress-info {
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+}
+	</style>
 </head>
 <body>
+	<div class="container">
+	<h1>Advanced Exercise</h1>
+	<br>
+	<br>
+	<br>
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+			60%
+		</div>
+	</div>
+	<h2>Array Progress Bars</h2>
+	<progress class="progress progress-striped progress-success" value="1" max="100">
+			<div class="progress">
+				<span class="progress-bar" style="width: 1%;">1%</span>
+			</div>
+		</progress>
+		<div class="progress-info">init</div>
+	</div>
+</div>
 
+	<script type="text/javascript">
+		var numbers = [10,25,40,72,100]
+		document.getElementsByClassName("progress-bar").aria-valuenow = numbers[0]
+
+		var progressBarContainer = $('#progress-bar');
+var progressBar = {
+    chain: [],
+    progress: progressBarContainer.children('progress'),
+    progressBar: progressBarContainer.find('.progress-bar'),
+    progressInfo: progressBarContainer.children('.progress-info'),
+    set: function(value, info, noPush) {
+        if(!noPush) {
+            this.chain.push(value);
+        }
+        if(this.chain[0] == value) {
+            this.go(value, info);
+        }
+        else {
+            var self = this;
+            setTimeout(function() {
+                self.set(value, info, true)
+            }, 200);
+        }
+    },
+    go: function(value, info) {
+        this.progressInfo.text(info);
+        var self = this;
+        var interval = setInterval(function() {
+            var curr = self.progress.attr('value');
+            if(curr >= value) {
+                clearInterval(interval);
+                self.progress.attr('value', value);
+                self.progressBar.css('width', value + '%');
+                self.chain.shift()
+            }
+            else {
+                self.progress.attr('value', ++curr);
+                self.progressBar.css('width', curr + '%');
+            }
+        }, 10)
+    }
+};
+
+progressBar.set(5, 'some init stuff');
+progressBar.set(12, 'checking things');
+progressBar.set(22, 'having a beer');
+progressBar.set(52, 'installing nothing');
+progressBar.set(82, 'hacking something');
+progressBar.set(96, 'having a glass of wine');
+progressBar.set(100, 'complete');
+	</script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>
